@@ -18,7 +18,8 @@
   "homepage": "https://github.com/ArkadiKorotitshTARpv22/games-api#readme",
   "dependencies": {
     "express": "^4.21.1",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "yamljs": "^0.3.0"
   },
   "directories": {
     "doc": "docs"
