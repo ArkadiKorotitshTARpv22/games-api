@@ -1,14 +1,13 @@
 {
   "name": "games-api",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArkadiKorotitshTARpv22/games-api"
+    "url": "git+https://github.com/ArkadiKorotitshTARpv22/games-api.git"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +17,11 @@
   },
   "homepage": "https://github.com/ArkadiKorotitshTARpv22/games-api#readme",
   "dependencies": {
-    "express": "^4.21.0",
+    "express": "^4.21.1",
     "swagger-ui-express": "^5.0.1"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "description": ""
 }
