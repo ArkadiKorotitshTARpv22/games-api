@@ -19,8 +19,6 @@ const games = [
     {id: 6, name: "Dawn Of War", price: 29.99},
     {id: 7, name: "Liar's Bar", price: 7.99},
     {id: 8, name: "Helldivers 2", price: 39.99},
-
-
 ]
 
 app.get('/games', (req,res) =>{
