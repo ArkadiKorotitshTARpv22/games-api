@@ -1,12 +1,14 @@
-//api
-// const app = require('express')()
 const express = require('express')
 const app = express()
 const port = 8080
 const swaggerUi = require('swagger-ui-express')
-// const swaggerDocument = require('./docs/swagger.json');
 const yamljs = require('yamljs')
-const swaggerDocument = yamljs.load('./docs/swagger.json')
+const swaggerDocument = yamljs.load('./docs/swagger.yaml');
+const cors = require('cors')
+
+
+app.use(express.json())
+app.use(cors())
 
 const games = [
     {id: 1, name: "Lethal Company", price: 9.99},
@@ -21,54 +23,49 @@ const games = [
 
 ]
 
-app.get('/games', (req, res) => {
+app.get('/games', (req,res) =>{
     res.send(games)
-
 })
 
-app.get('/games/:id',  (req, res) => {
-    if (typeof games[req.params.id - 1] === 'undefined') {
+app.get('/games/:id', (req,res) => {
+    if (typeof games[req.params.id -1] === 'undefined'){
         return res.status(404).send({error: "Game not found"})
     }
-
-    res.send(games[req.params.id - 1])
+    res.send(games[req.params.id -1])
 })
 
-app.post('/games', (req, res) => {
+app.post('/games', (req,res) => {
     if (!req.body.name || !req.body.price) {
-
         return res.status(400).send({error: 'One or all params are missing'})
     }
-    let game = {
+    let game ={
         id: games.length +1,
         price: req.body.price,
         name: req.body.name
     }
 
     games.push(game)
-    res.status(201).location(`${getBaseUrl(req)}/games/${games.length}`).send(game)
 
-    res.end()
+    res.status(201)
+        .location(`${getBaseUrl(req)}/games/${games.length}`)
+        .send(game)
 })
 
-app.delete('/game/:id', (req, res) => {
-    if (typeof games[req.params.id - 1] === 'undefined') {
+app.delete('/games/:id', (req,res) => {
+    if (typeof games[req.params.id -1] === 'undefined'){
         return res.status(404).send({error: "Game not found"})
     }
 
-    game.splice(req.params.id -1, 1)
+    games.splice(req.params.id -1, 1)
 
     res.status(204).send({error: "No content"})
 })
 
-
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 app.listen(port, () => {
-
-    console.log(`API up at: http://localhost:${port}`)
+    console.log(`API up at: http://localhost:${port}/games`)
 })
-
 
 function getBaseUrl(req) {
     return req.connection && req.connection.encrypted
