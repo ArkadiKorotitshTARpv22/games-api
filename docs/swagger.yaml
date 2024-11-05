@@ -1,0 +1,135 @@
+openapi: 3.0.2
+info:
+  title: Games-API
+  version: 1.0.0
+  description: '### This is a Swagger UI for our Games API'
+paths:
+  /games:
+    get:
+      tags:
+        - games
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                List of games:
+                  value:
+                    - Lethal Company
+                    - Content Warning
+          description: Returns a list of games
+      summary: Get a list of a games
+      description: Returns a list of games
+    post:
+      requestBody:
+        description: A new game to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/new-game'
+        required: true
+      tags:
+        - new-game
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/new-game'
+          description: Game is created
+        '400':
+          description: One or all params are missing
+      summary: Creates a game
+      description: Creates a new game
+  '/games/{id}':
+    get:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+      tags:
+        - details
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              examples:
+                Full details of a given name:
+                  value:
+                    id: 1
+                    name: Lethal Company 3
+                    price: 9.99
+          description: Returns full details of a given id game
+        '204':
+          description: No content
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              examples:
+                Game /w+ was not found:
+                  value: Game \\w+ was not found in game array
+          description: Error message
+      operationId: id
+      summary: Get full details of a game
+      description: Returns full details of a given id game
+    delete:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/delete-game'
+      tags:
+        - delete
+      operationId: id
+      summary: Delete game
+      description: Deletes game
+    parameters:
+      -
+        name: id
+        in: path
+        required: true
+components:
+  schemas:
+    error:
+      description: ''
+      type: object
+    new-game:
+      title: Root Type for new-game
+      description: ''
+      required:
+        - price
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          format: float
+          type: number
+      example:
+        name: Lethal Company
+        price: 9.99
+    delete-game:
+      description: ''
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          description: ''
+          type: string
+      example:
+        id: 1
