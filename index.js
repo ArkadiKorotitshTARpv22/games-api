@@ -65,6 +65,17 @@ app.listen(port, () => {
     console.log(`API up at: http://localhost:${port}/games`)
 })
 
+app.put('/games/:id', (req, res) => {
+    const gameId = parseInt(req.params.id);
+    const game = games.find(g => g.id === gameId);
+    if (!game) {
+        return res.status(404).send({ error: 'Game not found' });
+    }
+    game.name = req.body.name || game.name;
+    game.price = req.body.price || game.price;
+    res.send(game);
+});
+
 function getBaseUrl(req) {
     return req.connection && req.connection.encrypted
         ? 'https' : 'http' + `://${req.headers.host}`

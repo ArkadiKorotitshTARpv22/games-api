@@ -31,7 +31,8 @@
                     <td @click="getGame(game.id)" class="cursor-pointer">{{game.name}}</td>
                     <td>{{game.price}} &euro;</td>
                     <td>
-                        <button class="btn btn-danger btn-sm rounded-btn" @click="deleteGame(game.id)">Delete</button>
+                        <button class="btn btn-danger btn-sm rounded-btn margin-right" @click="deleteGame(game.id)">Delete</button>
+                        <button class="btn btn-warning btn-sm rounded-btn margin-right" @click="showEditGameModal(game)">Change</button>
                     </td>
                 </tr>
                 </tbody>
@@ -65,6 +66,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-indigo rounded-btn" @click="closeModal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="editGameModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-indigo-400 text-white">
+                    <h5 class="modal-title">Edit Game</h5>
+                    <button type="button" class="btn-close rounded-btn" @click="closeModal"></button>
+                </div>
+                <div class="modal-body">
+                    <form @submit.prevent="updateGame(gameInModal.id)">
+                        <div class="mb-3">
+                            <label for="editName" class="form-label">Game Name</label>
+                            <input type="text" v-model="gameInModal.name" class="form-control" id="editName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPrice" class="form-label">Price</label>
+                            <input type="text" v-model="gameInModal.price" class="form-control" id="editPrice" required>
+                        </div>
+                        <button type="submit" class="btn btn-indigo rounded-btn">Change Game</button>
+                    </form>
                 </div>
             </div>
         </div>
